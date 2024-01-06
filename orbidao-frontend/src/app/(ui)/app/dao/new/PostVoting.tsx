@@ -21,9 +21,9 @@ const PostVoting = ({ onUpdate, formData, onHold }: StepProps) => {
   return (
     <>
       <div className="text-center mb-6">
-        <Typography as="h3">Voting options :: Maximum expiry period</Typography>
+        <Typography as="h3"> Maximum expiry period</Typography>
         <Typography weight="light" className="my-4">
-          Set the global minimum quorum for a proposal to pass
+          Set the maximum expiry period for a proposal
         </Typography>
       </div>
       <RangeSlider
