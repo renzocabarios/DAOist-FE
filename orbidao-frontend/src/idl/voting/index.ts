@@ -40,17 +40,13 @@ export type VOTING_IDL_TYPE = {
           type: "publicKey";
         },
         {
-          name: "configProgram";
-          type: "publicKey";
-        },
-        {
           name: "issueProgram";
           type: "publicKey";
         }
       ];
     },
     {
-      name: "voteNft";
+      name: "vote";
       accounts: [
         {
           name: "owner";
@@ -58,7 +54,42 @@ export type VOTING_IDL_TYPE = {
           isSigner: true;
         },
         {
+          name: "vote";
+          isMut: true;
+          isSigner: false;
+        },
+        {
           name: "config";
+          isMut: false;
+          isSigner: false;
+        },
+        {
+          name: "proposalProgram";
+          isMut: false;
+          isSigner: false;
+        },
+        {
+          name: "proposal";
+          isMut: false;
+          isSigner: false;
+        },
+        {
+          name: "stakingProgram";
+          isMut: false;
+          isSigner: false;
+        },
+        {
+          name: "stakeState";
+          isMut: false;
+          isSigner: false;
+        },
+        {
+          name: "stakeConfig";
+          isMut: false;
+          isSigner: false;
+        },
+        {
+          name: "coreConfig";
           isMut: false;
           isSigner: false;
         },
@@ -80,7 +111,7 @@ export type VOTING_IDL_TYPE = {
       ];
     },
     {
-      name: "cleanupVoteNft";
+      name: "cleanupVote";
       accounts: [
         {
           name: "owner";
@@ -88,7 +119,47 @@ export type VOTING_IDL_TYPE = {
           isSigner: true;
         },
         {
+          name: "vote";
+          isMut: true;
+          isSigner: false;
+        },
+        {
           name: "config";
+          isMut: false;
+          isSigner: false;
+        },
+        {
+          name: "proposalProgram";
+          isMut: false;
+          isSigner: false;
+        },
+        {
+          name: "proposal";
+          isMut: false;
+          isSigner: false;
+        },
+        {
+          name: "stakingProgram";
+          isMut: false;
+          isSigner: false;
+        },
+        {
+          name: "stakeState";
+          isMut: false;
+          isSigner: false;
+        },
+        {
+          name: "stakeConfig";
+          isMut: false;
+          isSigner: false;
+        },
+        {
+          name: "coreConfig";
+          isMut: false;
+          isSigner: false;
+        },
+        {
+          name: "treasury";
           isMut: false;
           isSigner: false;
         },
@@ -101,7 +172,7 @@ export type VOTING_IDL_TYPE = {
       args: [];
     },
     {
-      name: "removeVoteNft";
+      name: "removeVote";
       accounts: [
         {
           name: "owner";
@@ -109,7 +180,47 @@ export type VOTING_IDL_TYPE = {
           isSigner: true;
         },
         {
+          name: "vote";
+          isMut: true;
+          isSigner: false;
+        },
+        {
           name: "config";
+          isMut: false;
+          isSigner: false;
+        },
+        {
+          name: "proposalProgram";
+          isMut: false;
+          isSigner: false;
+        },
+        {
+          name: "proposal";
+          isMut: false;
+          isSigner: false;
+        },
+        {
+          name: "stakingProgram";
+          isMut: false;
+          isSigner: false;
+        },
+        {
+          name: "stakeState";
+          isMut: false;
+          isSigner: false;
+        },
+        {
+          name: "stakeConfig";
+          isMut: false;
+          isSigner: false;
+        },
+        {
+          name: "coreConfig";
+          isMut: false;
+          isSigner: false;
+        },
+        {
+          name: "treasury";
           isMut: false;
           isSigner: false;
         },
@@ -119,7 +230,16 @@ export type VOTING_IDL_TYPE = {
           isSigner: false;
         }
       ];
-      args: [];
+      args: [
+        {
+          name: "amount";
+          type: "u64";
+        },
+        {
+          name: "choice";
+          type: "u8";
+        }
+      ];
     }
   ];
   accounts: [
@@ -141,10 +261,6 @@ export type VOTING_IDL_TYPE = {
             type: "publicKey";
           },
           {
-            name: "configProgram";
-            type: "publicKey";
-          },
-          {
             name: "issueProgram";
             type: "publicKey";
           },
@@ -155,42 +271,6 @@ export type VOTING_IDL_TYPE = {
           {
             name: "configBump";
             type: "u8";
-          }
-        ];
-      };
-    },
-    {
-      name: "DaoConfig";
-      type: {
-        kind: "struct";
-        fields: [
-          {
-            name: "seed";
-            type: "u64";
-          }
-        ];
-      };
-    },
-    {
-      name: "Proposal";
-      type: {
-        kind: "struct";
-        fields: [
-          {
-            name: "owner";
-            type: "publicKey";
-          }
-        ];
-      };
-    },
-    {
-      name: "StakeState";
-      type: {
-        kind: "struct";
-        fields: [
-          {
-            name: "owner";
-            type: "publicKey";
           }
         ];
       };
@@ -350,9 +430,6 @@ export type VOTING_IDL_TYPE = {
       msg: "Invalid choice";
     }
   ];
-  metadata: {
-    address: "CONTRACT_ADDRESS_HERE";
-  };
 };
 
 export const VOTING_IDL: VOTING_IDL_TYPE = {
@@ -397,17 +474,13 @@ export const VOTING_IDL: VOTING_IDL_TYPE = {
           type: "publicKey",
         },
         {
-          name: "configProgram",
-          type: "publicKey",
-        },
-        {
           name: "issueProgram",
           type: "publicKey",
         },
       ],
     },
     {
-      name: "voteNft",
+      name: "vote",
       accounts: [
         {
           name: "owner",
@@ -415,7 +488,42 @@ export const VOTING_IDL: VOTING_IDL_TYPE = {
           isSigner: true,
         },
         {
+          name: "vote",
+          isMut: true,
+          isSigner: false,
+        },
+        {
           name: "config",
+          isMut: false,
+          isSigner: false,
+        },
+        {
+          name: "proposalProgram",
+          isMut: false,
+          isSigner: false,
+        },
+        {
+          name: "proposal",
+          isMut: false,
+          isSigner: false,
+        },
+        {
+          name: "stakingProgram",
+          isMut: false,
+          isSigner: false,
+        },
+        {
+          name: "stakeState",
+          isMut: false,
+          isSigner: false,
+        },
+        {
+          name: "stakeConfig",
+          isMut: false,
+          isSigner: false,
+        },
+        {
+          name: "coreConfig",
           isMut: false,
           isSigner: false,
         },
@@ -437,7 +545,7 @@ export const VOTING_IDL: VOTING_IDL_TYPE = {
       ],
     },
     {
-      name: "cleanupVoteNft",
+      name: "cleanupVote",
       accounts: [
         {
           name: "owner",
@@ -445,7 +553,47 @@ export const VOTING_IDL: VOTING_IDL_TYPE = {
           isSigner: true,
         },
         {
+          name: "vote",
+          isMut: true,
+          isSigner: false,
+        },
+        {
           name: "config",
+          isMut: false,
+          isSigner: false,
+        },
+        {
+          name: "proposalProgram",
+          isMut: false,
+          isSigner: false,
+        },
+        {
+          name: "proposal",
+          isMut: false,
+          isSigner: false,
+        },
+        {
+          name: "stakingProgram",
+          isMut: false,
+          isSigner: false,
+        },
+        {
+          name: "stakeState",
+          isMut: false,
+          isSigner: false,
+        },
+        {
+          name: "stakeConfig",
+          isMut: false,
+          isSigner: false,
+        },
+        {
+          name: "coreConfig",
+          isMut: false,
+          isSigner: false,
+        },
+        {
+          name: "treasury",
           isMut: false,
           isSigner: false,
         },
@@ -458,7 +606,7 @@ export const VOTING_IDL: VOTING_IDL_TYPE = {
       args: [],
     },
     {
-      name: "removeVoteNft",
+      name: "removeVote",
       accounts: [
         {
           name: "owner",
@@ -466,7 +614,47 @@ export const VOTING_IDL: VOTING_IDL_TYPE = {
           isSigner: true,
         },
         {
+          name: "vote",
+          isMut: true,
+          isSigner: false,
+        },
+        {
           name: "config",
+          isMut: false,
+          isSigner: false,
+        },
+        {
+          name: "proposalProgram",
+          isMut: false,
+          isSigner: false,
+        },
+        {
+          name: "proposal",
+          isMut: false,
+          isSigner: false,
+        },
+        {
+          name: "stakingProgram",
+          isMut: false,
+          isSigner: false,
+        },
+        {
+          name: "stakeState",
+          isMut: false,
+          isSigner: false,
+        },
+        {
+          name: "stakeConfig",
+          isMut: false,
+          isSigner: false,
+        },
+        {
+          name: "coreConfig",
+          isMut: false,
+          isSigner: false,
+        },
+        {
+          name: "treasury",
           isMut: false,
           isSigner: false,
         },
@@ -476,7 +664,16 @@ export const VOTING_IDL: VOTING_IDL_TYPE = {
           isSigner: false,
         },
       ],
-      args: [],
+      args: [
+        {
+          name: "amount",
+          type: "u64",
+        },
+        {
+          name: "choice",
+          type: "u8",
+        },
+      ],
     },
   ],
   accounts: [
@@ -498,10 +695,6 @@ export const VOTING_IDL: VOTING_IDL_TYPE = {
             type: "publicKey",
           },
           {
-            name: "configProgram",
-            type: "publicKey",
-          },
-          {
             name: "issueProgram",
             type: "publicKey",
           },
@@ -512,42 +705,6 @@ export const VOTING_IDL: VOTING_IDL_TYPE = {
           {
             name: "configBump",
             type: "u8",
-          },
-        ],
-      },
-    },
-    {
-      name: "DaoConfig",
-      type: {
-        kind: "struct",
-        fields: [
-          {
-            name: "seed",
-            type: "u64",
-          },
-        ],
-      },
-    },
-    {
-      name: "Proposal",
-      type: {
-        kind: "struct",
-        fields: [
-          {
-            name: "owner",
-            type: "publicKey",
-          },
-        ],
-      },
-    },
-    {
-      name: "StakeState",
-      type: {
-        kind: "struct",
-        fields: [
-          {
-            name: "owner",
-            type: "publicKey",
           },
         ],
       },
@@ -707,7 +864,4 @@ export const VOTING_IDL: VOTING_IDL_TYPE = {
       msg: "Invalid choice",
     },
   ],
-  metadata: {
-    address: "CONTRACT_ADDRESS_HERE",
-  },
 };
