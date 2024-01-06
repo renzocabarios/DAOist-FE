@@ -3,15 +3,22 @@ import { AnchorProvider, BN } from "@coral-xyz/anchor";
 import { getVotingProgram } from "@/utils";
 import { NEXT_PUBLIC_VOTING_ID } from "@/env";
 
+export function getVotingConfigKey(seed: BN) {
+  return PublicKey.findProgramAddressSync(
+    [Buffer.from("config"), seed.toArrayLike(Buffer, "le", 8)],
+    new PublicKey(NEXT_PUBLIC_VOTING_ID)
+  )[0];
+}
+
 export async function initializeVotingProgram(
   provider: AnchorProvider,
   seed: BN,
-  porposalPublicKey: PublicKey,
   stakingPublicKey: PublicKey,
+  proposalPublicKey: PublicKey,
   issuePublickey: PublicKey
 ) {
   const program = getVotingProgram(NEXT_PUBLIC_VOTING_ID, provider);
   return await program.methods
-    .initialize(seed, stakingPublicKey, porposalPublicKey, issuePublickey)
+    .initialize(seed, stakingPublicKey, proposalPublicKey, issuePublickey)
     .accounts({});
 }
