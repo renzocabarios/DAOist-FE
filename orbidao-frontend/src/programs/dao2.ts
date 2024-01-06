@@ -3,6 +3,13 @@ import { AnchorProvider, BN } from "@coral-xyz/anchor";
 import { getDao2Program } from "@/utils";
 import { NEXT_PUBLIC_DAO_2_ID } from "@/env";
 
+export function getDao2ConfigKey(seed: BN) {
+  return PublicKey.findProgramAddressSync(
+    [Buffer.from("config"), seed.toArrayLike(Buffer, "le", 8)],
+    new PublicKey(NEXT_PUBLIC_DAO_2_ID)
+  )[0];
+}
+
 export async function initializeDao2Program(
   provider: AnchorProvider,
   seed: BN,
