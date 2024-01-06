@@ -1,10 +1,10 @@
 import { Program, AnchorProvider, Wallet, Address } from "@coral-xyz/anchor";
 import { VOTING_IDL_TYPE } from "@/idl/voting";
-import { TREASURY_IDL_TYPE } from "@/idl/treasury";
+import { DAO_2_IDL_TYPE } from "@/idl/dao_2";
 import { STAKING_IDL_TYPE } from "@/idl/staking";
 import { PROPOSAL_IDL_TYPE } from "@/idl/proposal";
 import { Connection } from "@solana/web3.js";
-import { PROPOSAL_IDL, STAKING_IDL, TREASURY_IDL, VOTING_IDL } from "@/idl";
+import { PROPOSAL_IDL, STAKING_IDL, DAO_2_IDL, VOTING_IDL } from "@/idl";
 
 export const getAnchorProvider = (connection: Connection, wallet: Wallet) => {
   return new AnchorProvider(
@@ -15,41 +15,47 @@ export const getAnchorProvider = (connection: Connection, wallet: Wallet) => {
 };
 
 export const getProgram = (
-  idl:
-    | VOTING_IDL_TYPE
-    | TREASURY_IDL_TYPE
-    | STAKING_IDL_TYPE
-    | PROPOSAL_IDL_TYPE,
+  idl: VOTING_IDL_TYPE | DAO_2_IDL_TYPE | STAKING_IDL_TYPE | PROPOSAL_IDL_TYPE,
   programId: Address,
   provider: AnchorProvider
-) => {
+): Program<typeof idl> => {
   return new Program<typeof idl>(idl, programId, provider);
 };
 
 export const getProposalProgram = (
   programId: Address,
   provider: AnchorProvider
-) => {
-  return getProgram(PROPOSAL_IDL, programId, provider);
+): Program<PROPOSAL_IDL_TYPE> => {
+  return getProgram(
+    PROPOSAL_IDL,
+    programId,
+    provider
+  ) as Program<PROPOSAL_IDL_TYPE>;
 };
 
 export const getStakingProgram = (
   programId: Address,
   provider: AnchorProvider
-) => {
-  return getProgram(STAKING_IDL, programId, provider);
+): Program<STAKING_IDL_TYPE> => {
+  return getProgram(
+    STAKING_IDL,
+    programId,
+    provider
+  ) as Program<STAKING_IDL_TYPE>;
 };
 
-export const getTreasuryProgram = (
+export const getDao2Program = (
   programId: Address,
   provider: AnchorProvider
-) => {
-  return getProgram(TREASURY_IDL, programId, provider);
+): Program<DAO_2_IDL_TYPE> => {
+  return getProgram(DAO_2_IDL, programId, provider) as Program<DAO_2_IDL_TYPE>;
 };
 
 export const getVotingProgram = (
   programId: Address,
   provider: AnchorProvider
-) => {
-  return getProgram(VOTING_IDL, programId, provider);
+): Program<VOTING_IDL_TYPE> => {
+  return getProgram(VOTING_IDL, programId, provider) as Program<
+    typeof VOTING_IDL
+  >;
 };
