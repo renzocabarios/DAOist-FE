@@ -4,7 +4,14 @@ import { DAO_2_IDL_TYPE } from "@/idl/dao_2";
 import { STAKING_IDL_TYPE } from "@/idl/staking";
 import { PROPOSAL_IDL_TYPE } from "@/idl/proposal";
 import { Connection } from "@solana/web3.js";
-import { PROPOSAL_IDL, STAKING_IDL, DAO_2_IDL, VOTING_IDL } from "@/idl";
+import {
+  PROPOSAL_IDL,
+  STAKING_IDL,
+  DAO_2_IDL,
+  VOTING_IDL,
+  ISSUE_IDL_TYPE,
+  ISSUE_IDL,
+} from "@/idl";
 
 export const getAnchorProvider = (connection: Connection, wallet: Wallet) => {
   return new AnchorProvider(
@@ -15,11 +22,23 @@ export const getAnchorProvider = (connection: Connection, wallet: Wallet) => {
 };
 
 export const getProgram = (
-  idl: VOTING_IDL_TYPE | DAO_2_IDL_TYPE | STAKING_IDL_TYPE | PROPOSAL_IDL_TYPE,
+  idl:
+    | VOTING_IDL_TYPE
+    | DAO_2_IDL_TYPE
+    | STAKING_IDL_TYPE
+    | PROPOSAL_IDL_TYPE
+    | ISSUE_IDL_TYPE,
   programId: Address,
   provider: AnchorProvider
 ): Program<typeof idl> => {
   return new Program<typeof idl>(idl, programId, provider);
+};
+
+export const getIssueProgram = (
+  programId: Address,
+  provider: AnchorProvider
+): Program<ISSUE_IDL_TYPE> => {
+  return getProgram(ISSUE_IDL, programId, provider) as Program<ISSUE_IDL_TYPE>;
 };
 
 export const getProposalProgram = (
