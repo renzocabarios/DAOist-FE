@@ -1,6 +1,6 @@
 export type ISSUE_IDL_TYPE = {
   version: "0.1.0";
-  name: "dao_2";
+  name: "issue";
   instructions: [
     {
       name: "initialize";
@@ -16,17 +16,62 @@ export type ISSUE_IDL_TYPE = {
           isSigner: false;
         },
         {
-          name: "treasury";
-          isMut: false;
-          isSigner: false;
-        },
-        {
           name: "config";
           isMut: true;
           isSigner: false;
         },
         {
           name: "systemProgram";
+          isMut: false;
+          isSigner: false;
+        },
+        {
+          name: "mint";
+          isMut: true;
+          isSigner: false;
+        },
+        {
+          name: "collection";
+          isMut: true;
+          isSigner: false;
+        },
+        {
+          name: "token";
+          isMut: true;
+          isSigner: false;
+        },
+        {
+          name: "metadata";
+          isMut: true;
+          isSigner: false;
+        },
+        {
+          name: "edition";
+          isMut: true;
+          isSigner: false;
+        },
+        {
+          name: "mplProgram";
+          isMut: false;
+          isSigner: false;
+        },
+        {
+          name: "tokenProgram";
+          isMut: false;
+          isSigner: false;
+        },
+        {
+          name: "associatedTokenProgram";
+          isMut: false;
+          isSigner: false;
+        },
+        {
+          name: "rentProgram";
+          isMut: false;
+          isSigner: false;
+        },
+        {
+          name: "coreConfig";
           isMut: false;
           isSigner: false;
         }
@@ -37,58 +82,73 @@ export type ISSUE_IDL_TYPE = {
           type: "u64";
         },
         {
-          name: "proposalFee";
+          name: "name";
+          type: "string";
+        },
+        {
+          name: "symbol";
+          type: "string";
+        },
+        {
+          name: "uri";
+          type: "string";
+        },
+        {
+          name: "issuePrice";
           type: "u64";
         },
         {
-          name: "minQuorum";
+          name: "issueAmount";
           type: "u64";
-        },
-        {
-          name: "minThreshold";
-          type: "u64";
-        },
-        {
-          name: "maxExpiry";
-          type: "u64";
-        },
-        {
-          name: "minStake";
-          type: "u64";
-        },
-        {
-          name: "minPrevotingPeriod";
-          type: "u64";
-        },
-        {
-          name: "proposalProgram";
-          type: "publicKey";
-        },
-        {
-          name: "votingProgram";
-          type: "publicKey";
-        },
-        {
-          name: "stakingProgram";
-          type: "publicKey";
-        },
-        {
-          name: "issueProgram";
-          type: "publicKey";
         }
       ];
     },
     {
-      name: "addProposal";
+      name: "issueTokens";
       accounts: [
         {
-          name: "owner";
+          name: "initializer";
           isMut: true;
           isSigner: true;
         },
         {
-          name: "config";
+          name: "initializerAta";
           isMut: true;
+          isSigner: false;
+        },
+        {
+          name: "auth";
+          isMut: false;
+          isSigner: false;
+        },
+        {
+          name: "mint";
+          isMut: true;
+          isSigner: false;
+        },
+        {
+          name: "config";
+          isMut: false;
+          isSigner: false;
+        },
+        {
+          name: "coreConfig";
+          isMut: false;
+          isSigner: false;
+        },
+        {
+          name: "treasury";
+          isMut: false;
+          isSigner: false;
+        },
+        {
+          name: "tokenProgram";
+          isMut: false;
+          isSigner: false;
+        },
+        {
+          name: "associatedTokenProgram";
+          isMut: false;
           isSigner: false;
         },
         {
@@ -97,10 +157,160 @@ export type ISSUE_IDL_TYPE = {
           isSigner: false;
         }
       ];
+      args: [];
+    },
+    {
+      name: "verifyNft";
+      accounts: [
+        {
+          name: "signer";
+          isMut: true;
+          isSigner: true;
+        },
+        {
+          name: "auth";
+          isMut: true;
+          isSigner: false;
+        },
+        {
+          name: "config";
+          isMut: false;
+          isSigner: false;
+        },
+        {
+          name: "collection";
+          isMut: false;
+          isSigner: false;
+        },
+        {
+          name: "collectionEdition";
+          isMut: false;
+          isSigner: false;
+        },
+        {
+          name: "collectionMetadata";
+          isMut: false;
+          isSigner: false;
+        },
+        {
+          name: "nftMint";
+          isMut: false;
+          isSigner: false;
+        },
+        {
+          name: "nftMetadata";
+          isMut: true;
+          isSigner: false;
+        },
+        {
+          name: "nftEdition";
+          isMut: false;
+          isSigner: false;
+        },
+        {
+          name: "mplProgram";
+          isMut: false;
+          isSigner: false;
+        },
+        {
+          name: "coreConfig";
+          isMut: false;
+          isSigner: false;
+        }
+      ];
+      args: [];
+    },
+    {
+      name: "issueNft";
+      accounts: [
+        {
+          name: "initializer";
+          isMut: true;
+          isSigner: true;
+        },
+        {
+          name: "auth";
+          isMut: true;
+          isSigner: false;
+        },
+        {
+          name: "nft";
+          isMut: true;
+          isSigner: true;
+        },
+        {
+          name: "token";
+          isMut: true;
+          isSigner: false;
+        },
+        {
+          name: "metadata";
+          isMut: true;
+          isSigner: false;
+        },
+        {
+          name: "edition";
+          isMut: true;
+          isSigner: false;
+        },
+        {
+          name: "collection";
+          isMut: false;
+          isSigner: false;
+        },
+        {
+          name: "config";
+          isMut: false;
+          isSigner: false;
+        },
+        {
+          name: "coreConfig";
+          isMut: false;
+          isSigner: false;
+        },
+        {
+          name: "treasury";
+          isMut: false;
+          isSigner: false;
+        },
+        {
+          name: "mplProgram";
+          isMut: false;
+          isSigner: false;
+        },
+        {
+          name: "tokenProgram";
+          isMut: false;
+          isSigner: false;
+        },
+        {
+          name: "associatedTokenProgram";
+          isMut: false;
+          isSigner: false;
+        },
+        {
+          name: "systemProgram";
+          isMut: false;
+          isSigner: false;
+        },
+        {
+          name: "rentProgram";
+          isMut: false;
+          isSigner: false;
+        }
+      ];
       args: [
         {
-          name: "id";
-          type: "u64";
+          name: "name";
+          type: "string";
+        },
+        {
+          name: "symbol";
+          type: "string";
+        },
+        {
+          name: "uri";
+          type: "string";
         }
       ];
     }
@@ -226,7 +436,7 @@ export type ISSUE_IDL_TYPE = {
 
 export const ISSUE_IDL: ISSUE_IDL_TYPE = {
   version: "0.1.0",
-  name: "dao_2",
+  name: "issue",
   instructions: [
     {
       name: "initialize",
@@ -242,17 +452,62 @@ export const ISSUE_IDL: ISSUE_IDL_TYPE = {
           isSigner: false,
         },
         {
-          name: "treasury",
-          isMut: false,
-          isSigner: false,
-        },
-        {
           name: "config",
           isMut: true,
           isSigner: false,
         },
         {
           name: "systemProgram",
+          isMut: false,
+          isSigner: false,
+        },
+        {
+          name: "mint",
+          isMut: true,
+          isSigner: false,
+        },
+        {
+          name: "collection",
+          isMut: true,
+          isSigner: false,
+        },
+        {
+          name: "token",
+          isMut: true,
+          isSigner: false,
+        },
+        {
+          name: "metadata",
+          isMut: true,
+          isSigner: false,
+        },
+        {
+          name: "edition",
+          isMut: true,
+          isSigner: false,
+        },
+        {
+          name: "mplProgram",
+          isMut: false,
+          isSigner: false,
+        },
+        {
+          name: "tokenProgram",
+          isMut: false,
+          isSigner: false,
+        },
+        {
+          name: "associatedTokenProgram",
+          isMut: false,
+          isSigner: false,
+        },
+        {
+          name: "rentProgram",
+          isMut: false,
+          isSigner: false,
+        },
+        {
+          name: "coreConfig",
           isMut: false,
           isSigner: false,
         },
@@ -263,58 +518,73 @@ export const ISSUE_IDL: ISSUE_IDL_TYPE = {
           type: "u64",
         },
         {
-          name: "proposalFee",
+          name: "name",
+          type: "string",
+        },
+        {
+          name: "symbol",
+          type: "string",
+        },
+        {
+          name: "uri",
+          type: "string",
+        },
+        {
+          name: "issuePrice",
           type: "u64",
         },
         {
-          name: "minQuorum",
+          name: "issueAmount",
           type: "u64",
-        },
-        {
-          name: "minThreshold",
-          type: "u64",
-        },
-        {
-          name: "maxExpiry",
-          type: "u64",
-        },
-        {
-          name: "minStake",
-          type: "u64",
-        },
-        {
-          name: "minPrevotingPeriod",
-          type: "u64",
-        },
-        {
-          name: "proposalProgram",
-          type: "publicKey",
-        },
-        {
-          name: "votingProgram",
-          type: "publicKey",
-        },
-        {
-          name: "stakingProgram",
-          type: "publicKey",
-        },
-        {
-          name: "issueProgram",
-          type: "publicKey",
         },
       ],
     },
     {
-      name: "addProposal",
+      name: "issueTokens",
       accounts: [
         {
-          name: "owner",
+          name: "initializer",
           isMut: true,
           isSigner: true,
         },
         {
-          name: "config",
+          name: "initializerAta",
           isMut: true,
+          isSigner: false,
+        },
+        {
+          name: "auth",
+          isMut: false,
+          isSigner: false,
+        },
+        {
+          name: "mint",
+          isMut: true,
+          isSigner: false,
+        },
+        {
+          name: "config",
+          isMut: false,
+          isSigner: false,
+        },
+        {
+          name: "coreConfig",
+          isMut: false,
+          isSigner: false,
+        },
+        {
+          name: "treasury",
+          isMut: false,
+          isSigner: false,
+        },
+        {
+          name: "tokenProgram",
+          isMut: false,
+          isSigner: false,
+        },
+        {
+          name: "associatedTokenProgram",
+          isMut: false,
           isSigner: false,
         },
         {
@@ -323,10 +593,160 @@ export const ISSUE_IDL: ISSUE_IDL_TYPE = {
           isSigner: false,
         },
       ],
+      args: [],
+    },
+    {
+      name: "verifyNft",
+      accounts: [
+        {
+          name: "signer",
+          isMut: true,
+          isSigner: true,
+        },
+        {
+          name: "auth",
+          isMut: true,
+          isSigner: false,
+        },
+        {
+          name: "config",
+          isMut: false,
+          isSigner: false,
+        },
+        {
+          name: "collection",
+          isMut: false,
+          isSigner: false,
+        },
+        {
+          name: "collectionEdition",
+          isMut: false,
+          isSigner: false,
+        },
+        {
+          name: "collectionMetadata",
+          isMut: false,
+          isSigner: false,
+        },
+        {
+          name: "nftMint",
+          isMut: false,
+          isSigner: false,
+        },
+        {
+          name: "nftMetadata",
+          isMut: true,
+          isSigner: false,
+        },
+        {
+          name: "nftEdition",
+          isMut: false,
+          isSigner: false,
+        },
+        {
+          name: "mplProgram",
+          isMut: false,
+          isSigner: false,
+        },
+        {
+          name: "coreConfig",
+          isMut: false,
+          isSigner: false,
+        },
+      ],
+      args: [],
+    },
+    {
+      name: "issueNft",
+      accounts: [
+        {
+          name: "initializer",
+          isMut: true,
+          isSigner: true,
+        },
+        {
+          name: "auth",
+          isMut: true,
+          isSigner: false,
+        },
+        {
+          name: "nft",
+          isMut: true,
+          isSigner: true,
+        },
+        {
+          name: "token",
+          isMut: true,
+          isSigner: false,
+        },
+        {
+          name: "metadata",
+          isMut: true,
+          isSigner: false,
+        },
+        {
+          name: "edition",
+          isMut: true,
+          isSigner: false,
+        },
+        {
+          name: "collection",
+          isMut: false,
+          isSigner: false,
+        },
+        {
+          name: "config",
+          isMut: false,
+          isSigner: false,
+        },
+        {
+          name: "coreConfig",
+          isMut: false,
+          isSigner: false,
+        },
+        {
+          name: "treasury",
+          isMut: false,
+          isSigner: false,
+        },
+        {
+          name: "mplProgram",
+          isMut: false,
+          isSigner: false,
+        },
+        {
+          name: "tokenProgram",
+          isMut: false,
+          isSigner: false,
+        },
+        {
+          name: "associatedTokenProgram",
+          isMut: false,
+          isSigner: false,
+        },
+        {
+          name: "systemProgram",
+          isMut: false,
+          isSigner: false,
+        },
+        {
+          name: "rentProgram",
+          isMut: false,
+          isSigner: false,
+        },
+      ],
       args: [
         {
-          name: "id",
-          type: "u64",
+          name: "name",
+          type: "string",
+        },
+        {
+          name: "symbol",
+          type: "string",
+        },
+        {
+          name: "uri",
+          type: "string",
         },
       ],
     },
