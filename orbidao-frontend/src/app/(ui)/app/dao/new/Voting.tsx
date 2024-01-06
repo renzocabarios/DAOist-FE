@@ -28,9 +28,9 @@ const Voting = ({ onUpdate, formData, onHold }: StepProps) => {
   return (
     <>
       <div className="text-center mb-6">
-        <Typography as="h3">Voting options :: Votes</Typography>
+        <Typography as="h3">Vote Threshold</Typography>
         <Typography weight="light" className="my-4">
-          Set the minimum numbers of votes to be valid
+          Set the minimum threshold(votes) to be valid
         </Typography>
       </div>
 
