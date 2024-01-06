@@ -1,20 +1,33 @@
-'use client';
-import { Stepper } from '@/components/ui/Stepper';
-import { Background } from './Background';
-import { Dispatch, FormEvent, SetStateAction, useMemo, useState } from 'react';
-import { CreateOrgTemplate } from './CreateOrgTemplate';
-import { NameOrganization } from './CreateOrgName';
-import { MEMBERSHIP, Membership } from './Membership';
-import { TokenIssuance } from './TokenIssuance';
-import { ProposalFee } from './ProposalFee';
-import { Voting } from './Voting';
-import { VoteQuorum } from './QuorumParticipants';
-import { VotingStake } from './VotingStake';
-import { PreVoting } from './PreVoting';
-import { PostVoting } from './PostVoting';
-import { CreateOrgReview } from './Review';
-import { useRouter } from 'next/navigation';
-import { useOrgContext } from '../../layout';
+"use client";
+import { Stepper } from "@/components/ui/Stepper";
+import { Background } from "./Background";
+import { Dispatch, FormEvent, SetStateAction, useMemo, useState } from "react";
+import { CreateOrgTemplate } from "./CreateOrgTemplate";
+import { NameOrganization } from "./CreateOrgName";
+import { MEMBERSHIP, Membership } from "./Membership";
+import { TokenIssuance } from "./TokenIssuance";
+import { ProposalFee } from "./ProposalFee";
+import { Voting } from "./Voting";
+import { VoteQuorum } from "./QuorumParticipants";
+import { VotingStake } from "./VotingStake";
+import { PreVoting } from "./PreVoting";
+import { PostVoting } from "./PostVoting";
+import { CreateOrgReview } from "./Review";
+import { useRouter } from "next/navigation";
+import { useOrgContext } from "../../layout";
+import { getDao2ConfigKey, initializeDao2Program } from "@/programs/dao2";
+import { Keypair, PublicKey } from "@solana/web3.js";
+import { AnchorProvider, BN } from "@coral-xyz/anchor";
+import { getIssueConfigKey, initializeIssueProgram } from "@/programs/issue";
+import {
+  getProposalConfigKey,
+  initializeProposalProgram,
+} from "@/programs/proposal";
+import {
+  getStakingConfigKey,
+  initializeStakingProgram,
+} from "@/programs/staking";
+import { getVotingConfigKey, initializeVotingProgram } from "@/programs/voting";
 
 export type FormDataType = {
   orgTemplate?: string;
@@ -44,16 +57,84 @@ export default function Page() {
   const [isDisabled, setIsDisabled] = useState(false);
   const [isFinal, setIsFinal] = useState(false);
   const [formData, setFormData] = useState<FormDataType>({
-    quorumParticipation: '51',
-    preVoting: '1',
-    postVoting: '14',
+    quorumParticipation: "51",
+    preVoting: "1",
+    postVoting: "14",
   });
 
   const handleFormSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-    console.log('submit: ', formData);
-    addOrganization(formData['organizationName'] ?? '');
-    router.push('/app');
+    console.log(formData);
+    const seed = new BN(0);
+    const dao2Keypair = Keypair.generate();
+    const dao2ConfigKey = getDao2ConfigKey(seed);
+
+    const issueKeypair = Keypair.generate();
+    const issueConfigKey = getIssueConfigKey(seed);
+
+    const proposalKeypair = Keypair.generate();
+    const proposalConfigKey = getProposalConfigKey(seed);
+
+    const stakingKeypair = Keypair.generate();
+    const stakingConfigKey = getStakingConfigKey(seed);
+
+    const votingKeypair = Keypair.generate();
+    const votingConfigKey = getVotingConfigKey(seed);
+
+    initializeProposalProgram(
+      AnchorProvider.local(),
+      seed,
+      dao2Keypair.publicKey,
+      stakingKeypair.publicKey
+    );
+
+    initializeVotingProgram(
+      AnchorProvider.local(),
+      seed,
+      stakingKeypair.publicKey,
+      proposalKeypair.publicKey,
+      issueKeypair.publicKey
+    );
+
+    initializeStakingProgram(
+      AnchorProvider.local(),
+      seed,
+      issueKeypair.publicKey
+    );
+
+    const tokenName = "My NFT";
+    const tokenSymbol = "My NFT";
+    const tokenUri = "My NFT";
+    const tokenPrice = 100;
+    const tokenAmount = 100;
+
+    initializeIssueProgram(
+      AnchorProvider.local(),
+      seed,
+      tokenName,
+      tokenSymbol,
+      tokenUri,
+      tokenPrice,
+      tokenAmount
+    );
+
+    initializeDao2Program(
+      AnchorProvider.local(),
+      seed,
+      Number(formData.proposalFee),
+      Number(formData.quorumParticipation),
+      Number(1), // Min Treshold
+      Number(1), // Max Expiry,
+      Number(1), // Min Stake,
+      Number(1), // Min Pre Voting Period,
+      proposalKeypair.publicKey,
+      votingKeypair.publicKey,
+      stakingKeypair.publicKey,
+      issueKeypair.publicKey
+    );
+
+    // addOrganization(formData['organizationName'] ?? '');
+    // router.push('/app');
   };
 
   const onFormUpdate = (fieldName: keyof FormDataType) => (value: string) => {
@@ -74,7 +155,12 @@ export default function Page() {
         onStepChange={setCurrentStep}
         onHold={onFormHold}
       />,
-      <NameOrganization key="nameOrg" formData={formData} onUpdate={onFormUpdate} onHold={onFormHold} />,
+      <NameOrganization
+        key="nameOrg"
+        formData={formData}
+        onUpdate={onFormUpdate}
+        onHold={onFormHold}
+      />,
       <Membership
         key="memberShip"
         formData={formData}
@@ -82,11 +168,36 @@ export default function Page() {
         onStepChange={setCurrentStep}
         onHold={onFormHold}
       />,
-      <ProposalFee key="proposalFee" formData={formData} onUpdate={onFormUpdate} onHold={onFormHold} />,
-      <Voting key="voting" formData={formData} onUpdate={onFormUpdate} onHold={onFormHold} />,
-      <VoteQuorum key="voteQuorum" formData={formData} onUpdate={onFormUpdate} onHold={onFormHold} />,
-      <PreVoting key="preVoting" formData={formData} onUpdate={onFormUpdate} onHold={onFormHold} />,
-      <PostVoting key="postVoting" formData={formData} onUpdate={onFormUpdate} onHold={onFormHold} />,
+      <ProposalFee
+        key="proposalFee"
+        formData={formData}
+        onUpdate={onFormUpdate}
+        onHold={onFormHold}
+      />,
+      <Voting
+        key="voting"
+        formData={formData}
+        onUpdate={onFormUpdate}
+        onHold={onFormHold}
+      />,
+      <VoteQuorum
+        key="voteQuorum"
+        formData={formData}
+        onUpdate={onFormUpdate}
+        onHold={onFormHold}
+      />,
+      <PreVoting
+        key="preVoting"
+        formData={formData}
+        onUpdate={onFormUpdate}
+        onHold={onFormHold}
+      />,
+      <PostVoting
+        key="postVoting"
+        formData={formData}
+        onUpdate={onFormUpdate}
+        onHold={onFormHold}
+      />,
       <CreateOrgReview key="review" formData={formData} />,
     ];
 
@@ -94,14 +205,24 @@ export default function Page() {
       createOrganization.splice(
         3,
         0,
-        <TokenIssuance key="tokenIssuance" formData={formData} onUpdate={onFormUpdate} onHold={onFormHold} />
+        <TokenIssuance
+          key="tokenIssuance"
+          formData={formData}
+          onUpdate={onFormUpdate}
+          onHold={onFormHold}
+        />
       );
     }
     if (membership && membership === MEMBERSHIP.NON_FUNGIBLE) {
       createOrganization.splice(
         7,
         0,
-        <VotingStake key="votingStake" formData={formData} onUpdate={onFormUpdate} onHold={onFormHold} />
+        <VotingStake
+          key="votingStake"
+          formData={formData}
+          onUpdate={onFormUpdate}
+          onHold={onFormHold}
+        />
       );
     }
 
@@ -129,7 +250,7 @@ export default function Page() {
             current={currentStep}
             handleStep={onStepChange}
             className="md:w-[35vw] xs:w-[90vw]"
-            type={isFinal ? 'submit' : 'button'}
+            type={isFinal ? "submit" : "button"}
           />
         </form>
         <div className="flex items-center justify-center mt-10 text-sm text-white text-opacity-50">
