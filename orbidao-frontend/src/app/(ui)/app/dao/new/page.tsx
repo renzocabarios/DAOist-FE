@@ -123,10 +123,10 @@ export default function Page() {
       seed,
       Number(formData.proposalFee),
       Number(formData.quorumParticipation),
-      Number(1), // Min Treshold
-      Number(1), // Max Expiry,
-      Number(1), // Min Stake,
-      Number(1), // Min Pre Voting Period,
+      Number(formData.votes), // Min Treshold
+      Number(formData.postVoting), // Max Expiry,
+      Number(formData.votingStake), // Min Stake,
+      Number(formData.preVoting), // Min Pre Voting Period,
       proposalKeypair.publicKey,
       votingKeypair.publicKey,
       stakingKeypair.publicKey,
