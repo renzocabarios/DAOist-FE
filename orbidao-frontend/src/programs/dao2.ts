@@ -13,6 +13,12 @@ export function getDao2ConfigKey(seed: BN) {
 export async function initializeDao2Program(
   provider: AnchorProvider,
   seed: BN,
+  proposalFee: Number,
+  minQuorum: Number,
+  minTreshold: Number,
+  maxExpiry: Number,
+  minStake: Number,
+  minPrevotingPeriod: Number,
   proposalPublicKey: PublicKey,
   votingPublicKey: PublicKey,
   stakingPublicKey: PublicKey,
@@ -22,16 +28,17 @@ export async function initializeDao2Program(
   return await program.methods
     .initialize(
       seed,
-      new BN(1e8),
-      new BN(70),
-      new BN(1000),
-      new BN(432000),
-      new BN(108000),
-      new BN(50),
+      new BN(proposalFee),
+      new BN(minQuorum),
+      new BN(minTreshold),
+      new BN(maxExpiry),
+      new BN(minStake),
+      new BN(minPrevotingPeriod),
       proposalPublicKey,
       votingPublicKey,
       stakingPublicKey,
       issuePublicKey
     )
-    .accounts({});
+    .accounts({})
+    .instruction();
 }
