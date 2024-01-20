@@ -1,9 +1,29 @@
 "use client";
+import { CONNECTION } from "@/env";
+import { getAllDaoConfig } from "@/programs/dao2";
+import { AnchorProvider } from "@coral-xyz/anchor";
 import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
+import { useEffect } from "react";
 require("@solana/wallet-adapter-react-ui/styles.css");
+
 export default function Home() {
+  useEffect(() => {
+    const start = async () => {
+      const { solana } = window as any;
+
+      const provider = new AnchorProvider(CONNECTION, solana, {
+        commitment: "finalized",
+      });
+
+      console.log(provider);
+
+      console.log(await getAllDaoConfig(provider));
+    };
+    start();
+  }, []);
+
   return (
-    <main className="min-h-screen">
+    <>
       <div className="flex justify-between items-center">
         <p>
           Build in our DAO a sense of Oneness A feeling of Strength to be
@@ -37,6 +57,6 @@ export default function Home() {
         <p>Telegram</p>
         <p>#3Thos by WBA</p>
       </div>
-    </main>
+    </>
   );
 }
