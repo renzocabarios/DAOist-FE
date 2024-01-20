@@ -1,5 +1,6 @@
-import Image from "next/image";
-
+"use client";
+import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
+require("@solana/wallet-adapter-react-ui/styles.css");
 export default function Home() {
   return (
     <main className="min-h-screen">
@@ -10,7 +11,7 @@ export default function Home() {
         </p>
         <div className="flex justify-between items-center gap-4">
           <p>About Us</p>
-          <p>Connect Wallet</p>
+          <WalletMultiButton />
         </div>
       </div>
 
