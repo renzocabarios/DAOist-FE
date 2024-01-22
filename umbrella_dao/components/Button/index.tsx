@@ -6,15 +6,15 @@ interface IButton {
   type?: ButtonType;
   children?: any;
   name?: string;
-  onClick: () => void;
+  onClick?: () => void;
 }
 
 function Button({ type, children, onClick }: IButton) {
   return (
     <button
       type={type}
-      onClick={onClick}
-      className="bg-blue-500 px-2 py-2 text-white rounded-lg"
+      onClick={onClick ?? (() => {})}
+      className="bg-slate-800 px-3 py-2 text-white rounded-lg"
     >
       {children}
     </button>
