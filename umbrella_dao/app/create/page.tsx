@@ -1,4 +1,5 @@
 "use client";
+import { Button, InputField } from "@/components";
 import { CONNECTION } from "@/env";
 import { initializeDaoProgram } from "@/programs/dao";
 import { initializeProposalProgram } from "@/programs/proposal";
@@ -6,10 +7,8 @@ import { initializeVotingProgram } from "@/programs/voting";
 import { createTransaction } from "@/utils";
 import { AnchorProvider, BN } from "@coral-xyz/anchor";
 import { useWallet } from "@solana/wallet-adapter-react";
-import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
 import { Keypair, PublicKey } from "@solana/web3.js";
 import { randomBytes } from "crypto";
-import { useEffect } from "react";
 require("@solana/wallet-adapter-react-ui/styles.css");
 
 export default function Home() {
@@ -77,7 +76,17 @@ export default function Home() {
 
   return (
     <>
-      <button onClick={create}>Create DAO</button>
+      <InputField name="proposalFee" title="Proposal Fee" type="number" />
+      <InputField name="minQuorum" title="Minimum Quorum" type="number" />
+      <InputField name="minTreshold" title="Minimum Treshold" type="number" />
+      <InputField name="maxExpiry" title="Maximum Expiry" type="number" />
+      <InputField name="minStake" title="Minimum Stake" type="number" />
+      <InputField
+        name="minPrevotingPeriod"
+        title="Minimum Pre-voting Period"
+        type="number"
+      />
+      <Button onClick={create}>Create DAO</Button>
     </>
   );
 }
