@@ -645,9 +645,6 @@ export type PROPOSAL_IDL_TYPE = {
       msg: "Invalid choice";
     }
   ];
-  metadata: {
-    address: "propm845StqEBV57ZSnTe8EW8duzAxo5p7h4inhibXV";
-  };
 };
 
 export const PROPOSAL_IDL: PROPOSAL_IDL_TYPE = {
@@ -1297,7 +1294,4 @@ export const PROPOSAL_IDL: PROPOSAL_IDL_TYPE = {
       msg: "Invalid choice",
     },
   ],
-  metadata: {
-    address: "propm845StqEBV57ZSnTe8EW8duzAxo5p7h4inhibXV",
-  },
 };

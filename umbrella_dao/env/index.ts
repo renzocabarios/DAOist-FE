@@ -8,8 +8,8 @@ export const NEXT_PUBLIC_STAKING_ID: string =
   process.env.NEXT_PUBLIC_STAKING_ID ??
   "stakyTBmEpbUcxNhjiv16Bvr53RVy68ENBZXPiUzNcF";
 
-export const NEXT_PUBLIC_DAO_2_ID: string =
-  process.env.NEXT_PUBLIC_DAO_2_ID ??
+export const NEXT_PUBLIC_DAO_ID: string =
+  process.env.NEXT_PUBLIC_DAO_ID ??
   "daoSYkGVA6pu5CxknvVMMTc8nFAGsYzfQt2jK5CgC5V";
 
 export const NEXT_PUBLIC_VOTING_ID: string =

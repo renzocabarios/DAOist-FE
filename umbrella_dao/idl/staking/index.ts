@@ -801,9 +801,6 @@ export type STAKING_IDL_TYPE = {
       msg: "Invalid Collection";
     }
   ];
-  metadata: {
-    address: "stakyTBmEpbUcxNhjiv16Bvr53RVy68ENBZXPiUzNcF";
-  };
 };
 
 export const STAKING_IDL: STAKING_IDL_TYPE = {
@@ -1609,7 +1606,4 @@ export const STAKING_IDL: STAKING_IDL_TYPE = {
       msg: "Invalid Collection",
     },
   ],
-  metadata: {
-    address: "stakyTBmEpbUcxNhjiv16Bvr53RVy68ENBZXPiUzNcF",
-  },
 };

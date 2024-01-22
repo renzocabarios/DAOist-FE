@@ -1,21 +1,21 @@
 import { PublicKey } from "@solana/web3.js";
 import { AnchorProvider, BN } from "@coral-xyz/anchor";
-import { getDao2Program } from "@/utils";
-import { NEXT_PUBLIC_DAO_2_ID } from "@/env";
+import { getDaoProgram } from "@/utils";
+import { NEXT_PUBLIC_DAO_ID } from "@/env";
 
 export async function getAllDaoConfig(provider: AnchorProvider) {
-  const program = getDao2Program(provider);
-  return await program.account.DaoConfig.all();
+  const program = getDaoProgram(provider);
+  return await program.account.daoConfig.all();
 }
 
 export function getDao2ConfigKey(seed: BN) {
   return PublicKey.findProgramAddressSync(
     [Buffer.from("config"), seed.toArrayLike(Buffer, "le", 8)],
-    new PublicKey(NEXT_PUBLIC_DAO_2_ID)
+    new PublicKey(NEXT_PUBLIC_DAO_ID)
   )[0];
 }
 
-export async function initializeDao2Program(
+export async function initializeDaoProgram(
   provider: AnchorProvider,
   seed: BN,
   proposalFee: Number,
@@ -27,9 +27,9 @@ export async function initializeDao2Program(
   proposalPublicKey: PublicKey,
   votingPublicKey: PublicKey,
   stakingPublicKey: PublicKey,
-  issuePublicKey: PublicKey
+  collectionMind: PublicKey
 ) {
-  const program = getDao2Program(provider);
+  const program = getDaoProgram(provider);
   return await program.methods
     .initialize(
       seed,
@@ -42,7 +42,7 @@ export async function initializeDao2Program(
       proposalPublicKey,
       votingPublicKey,
       stakingPublicKey,
-      issuePublicKey
+      collectionMind
     )
     .accounts({})
     .instruction();

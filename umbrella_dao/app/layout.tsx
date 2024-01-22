@@ -16,13 +16,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <main className="min-h-screen">
-          <ConnectionProvider endpoint={NEXT_PUBLIC_RPC_URL}>
-            <WalletProvider wallets={WALLETS} autoConnect>
-              <WalletModalProvider>{children}</WalletModalProvider>
-            </WalletProvider>
-          </ConnectionProvider>
-        </main>
+        <ConnectionProvider endpoint={NEXT_PUBLIC_RPC_URL}>
+          <WalletProvider wallets={WALLETS} autoConnect>
+            <WalletModalProvider>{children}</WalletModalProvider>
+          </WalletProvider>
+        </ConnectionProvider>
       </body>
     </html>
   );

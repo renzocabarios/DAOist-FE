@@ -608,9 +608,6 @@ export type VOTING_IDL_TYPE = {
       msg: "Invalid choice";
     }
   ];
-  metadata: {
-    address: "voteUXym9t6h3VzHYumMyMCXmiDoYqMiC2g4JnvdnGC";
-  };
 };
 
 export const VOTING_IDL: VOTING_IDL_TYPE = {
@@ -1223,7 +1220,4 @@ export const VOTING_IDL: VOTING_IDL_TYPE = {
       msg: "Invalid choice",
     },
   ],
-  metadata: {
-    address: "voteUXym9t6h3VzHYumMyMCXmiDoYqMiC2g4JnvdnGC",
-  },
 };

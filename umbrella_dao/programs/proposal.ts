@@ -13,12 +13,12 @@ export function getProposalConfigKey(seed: BN) {
 export async function initializeProposalProgram(
   provider: AnchorProvider,
   seed: BN,
-  dao2PublicKey: PublicKey,
-  stakingPublicKey: PublicKey
+  stakingPublicKey: PublicKey,
+  daoPublicKey: PublicKey
 ) {
   const program = getProposalProgram(provider);
   return await program.methods
-    .initialize(seed, stakingPublicKey, dao2PublicKey)
+    .initialize(seed, stakingPublicKey, daoPublicKey)
     .accounts({})
     .instruction();
 }

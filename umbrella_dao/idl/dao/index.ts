@@ -1,4 +1,4 @@
-export type DAO_2_IDL_TYPE = {
+export type DAO_IDL_TYPE = {
   version: "0.1.0";
   name: "dao";
   instructions: [
@@ -107,7 +107,7 @@ export type DAO_2_IDL_TYPE = {
   ];
   accounts: [
     {
-      name: "DaoConfig";
+      name: "daoConfig";
       type: {
         kind: "struct";
         fields: [
@@ -292,12 +292,9 @@ export type DAO_2_IDL_TYPE = {
       msg: "Invalid choice";
     }
   ];
-  metadata: {
-    address: "7m9evrWog2gH5bCzQBiNta5tWyaVHi8WX9R5hupj5Ccp";
-  };
 };
 
-export const DAO_2_IDL: DAO_2_IDL_TYPE = {
+export const DAO_IDL: DAO_IDL_TYPE = {
   version: "0.1.0",
   name: "dao",
   instructions: [
@@ -406,7 +403,7 @@ export const DAO_2_IDL: DAO_2_IDL_TYPE = {
   ],
   accounts: [
     {
-      name: "DaoConfig",
+      name: "daoConfig",
       type: {
         kind: "struct",
         fields: [
@@ -591,7 +588,4 @@ export const DAO_2_IDL: DAO_2_IDL_TYPE = {
       msg: "Invalid choice",
     },
   ],
-  metadata: {
-    address: "7m9evrWog2gH5bCzQBiNta5tWyaVHi8WX9R5hupj5Ccp",
-  },
 };

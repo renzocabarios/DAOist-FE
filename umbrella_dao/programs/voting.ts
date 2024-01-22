@@ -14,12 +14,11 @@ export async function initializeVotingProgram(
   provider: AnchorProvider,
   seed: BN,
   stakingPublicKey: PublicKey,
-  proposalPublicKey: PublicKey,
-  issuePublickey: PublicKey
+  proposalPublicKey: PublicKey
 ) {
-  // const program = getVotingProgram(provider);
-  // return await program.methods
-  //   .initialize(seed, stakingPublicKey, proposalPublicKey, issuePublickey)
-  //   .accounts({})
-  //   .instruction();
+  const program = getVotingProgram(provider);
+  return await program.methods
+    .initialize(seed, stakingPublicKey, proposalPublicKey)
+    .accounts({})
+    .instruction();
 }

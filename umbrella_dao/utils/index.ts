@@ -1,6 +1,6 @@
 import { Program, AnchorProvider, Wallet, Address } from "@coral-xyz/anchor";
 import { VOTING_IDL_TYPE } from "@/idl/voting";
-import { DAO_2_IDL_TYPE } from "@/idl/dao_2";
+import { DAO_IDL_TYPE } from "@/idl/dao";
 import { STAKING_IDL_TYPE } from "@/idl/staking";
 import { PROPOSAL_IDL_TYPE } from "@/idl/proposal";
 import {
@@ -12,9 +12,9 @@ import {
   VersionedTransaction,
   clusterApiUrl,
 } from "@solana/web3.js";
-import { PROPOSAL_IDL, STAKING_IDL, DAO_2_IDL, VOTING_IDL } from "@/idl";
+import { PROPOSAL_IDL, STAKING_IDL, DAO_IDL, VOTING_IDL } from "@/idl";
 import {
-  NEXT_PUBLIC_DAO_2_ID,
+  NEXT_PUBLIC_DAO_ID,
   NEXT_PUBLIC_PROPOSAL_ID,
   NEXT_PUBLIC_STAKING_ID,
   NEXT_PUBLIC_VOTING_ID,
@@ -44,10 +44,10 @@ export const getStakingProgram = (
   );
 };
 
-export const getDao2Program = (
+export const getDaoProgram = (
   provider: AnchorProvider
-): Program<DAO_2_IDL_TYPE> => {
-  return new Program<DAO_2_IDL_TYPE>(DAO_2_IDL, NEXT_PUBLIC_DAO_2_ID, provider);
+): Program<DAO_IDL_TYPE> => {
+  return new Program<DAO_IDL_TYPE>(DAO_IDL, NEXT_PUBLIC_DAO_ID, provider);
 };
 
 export const getVotingProgram = (
