@@ -14,7 +14,7 @@ function Button({ type, children, onClick }: IButton) {
     <button
       type={type}
       onClick={onClick ?? (() => {})}
-      className="bg-slate-900 px-3 py-2 text-white rounded-lg"
+      className="bg-slate-700 px-3 py-2 text-white rounded-lg"
     >
       {children}
     </button>
