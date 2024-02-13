@@ -4,7 +4,7 @@
 }
 
 .sidenav {
-  width: 20vw;
+  width: 13vw;
   @apply h-screen fixed z-20 bg-slate-900;
 }
 
@@ -14,16 +14,17 @@
 }
 
 .sidenav_divider {
-  width: 20vw;
+  width: 13vw;
   @apply h-screen;
 }
 
 .container {
   @apply min-h-screen flex;
 }
+
 .content_container {
-  width: 80vw;
-  @apply min-h-screen  flex flex-col;
+  width: 87vw;
+  @apply min-h-screen flex flex-col;
 }
 
 .content {
