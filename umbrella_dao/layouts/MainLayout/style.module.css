@@ -1,18 +1,3 @@
-/* .header {
-  min-height: 8vh;
-  @apply flex justify-evenly items-center p-2 bg-slate-900 text-white;
-}
-
-.body {
-  min-height: 84vh;
-  @apply flex flex-col justify-evenly items-center bg-slate-300;
-}
-
-.footer {
-  height: 8vh;
-  @apply flex justify-evenly items-center p-2 bg-slate-900 text-white;
-} */
-
 .navbar {
   height: 10vh;
   @apply w-screen fixed z-10 bg-slate-900;
@@ -43,5 +28,5 @@
 
 .content {
   min-height: 90vh;
-  @apply w-full bg-red-700;
+  @apply w-full;
 }

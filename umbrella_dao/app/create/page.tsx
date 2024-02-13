@@ -1,24 +1,45 @@
 "use client";
 import { Button, InputField } from "@/components";
 import { CONNECTION } from "@/env";
-import { initializeDaoProgram } from "@/programs/dao";
+import {
+  getDaoAuth,
+  getDaoConfigKey,
+  initializeDaoProgram,
+} from "@/programs/dao";
 import { initializeProposalProgram } from "@/programs/proposal";
-import { initializeVotingProgram } from "@/programs/voting";
+import {
+  getVotingAuthKey,
+  getVotingConfigKey,
+  initializeVotingProgram,
+} from "@/programs/voting";
 import { createTransaction } from "@/utils";
 import { AnchorProvider, BN } from "@coral-xyz/anchor";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { Keypair, PublicKey } from "@solana/web3.js";
 import { randomBytes } from "crypto";
+import { useEffect } from "react";
 require("@solana/wallet-adapter-react-ui/styles.css");
 
 export default function Home() {
   const { publicKey, sendTransaction } = useWallet();
+
+  useEffect(() => {
+    create();
+  }, []);
+
   const create = async () => {
     const { solana } = window as any;
     const provider = new AnchorProvider(CONNECTION, solana, {
       commitment: "finalized",
     });
-    const seed = new BN(randomBytes(8));
+    const daoConfig = Keypair.generate();
+    const daoConfigKey = getDaoConfigKey(daoConfig.publicKey);
+    const daoAuthKey = getDaoAuth(daoConfigKey);
+    const daoTeasury = getDaoAuth(daoConfigKey);
+
+    const votingConfig = Keypair.generate();
+    const votingConfigKey = getVotingConfigKey(votingConfig.publicKey);
+    const votingAuthKey = getVotingAuthKey(votingConfigKey);
 
     const proposalKeypair = Keypair.generate();
     const votingKeypair = Keypair.generate();
@@ -31,19 +52,21 @@ export default function Home() {
     const instructions = [
       await initializeVotingProgram(
         provider,
-        seed,
+        [votingConfig.publicKey.toBuffer()],
         stakingKeypair.publicKey,
-        proposalKeypair.publicKey
+        proposalKeypair.publicKey,
+        votingConfigKey,
+        votingAuthKey
       ),
       await initializeProposalProgram(
         provider,
-        seed,
+        [daoConfig.publicKey.toBuffer()],
         stakingKeypair.publicKey,
         daoKeypair.publicKey
       ),
       await initializeDaoProgram(
         provider,
-        seed,
+        [daoConfig.publicKey.toBuffer()],
         1,
         1,
         1,
@@ -53,25 +76,15 @@ export default function Home() {
         proposalKeypair.publicKey,
         votingKeypair.publicKey,
         stakingKeypair.publicKey,
-        collectionMint
-      ),
-      await initializeDaoProgram(
-        provider,
-        seed,
-        1,
-        1,
-        1,
-        1,
-        1,
-        1,
-        proposalKeypair.publicKey,
-        votingKeypair.publicKey,
-        stakingKeypair.publicKey,
-        collectionMint
+        collectionMint,
+        daoAuthKey,
+        daoTeasury,
+        daoConfigKey
       ),
     ];
-
-    await sendTransaction(await createTransaction(instructions), CONNECTION);
+    console.log(
+      await sendTransaction(await createTransaction(instructions), CONNECTION)
+    );
   };
 
   return (

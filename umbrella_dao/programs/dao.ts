@@ -8,9 +8,23 @@ export async function getAllDaoConfig(provider: AnchorProvider) {
   return await program.account.daoConfig.all();
 }
 
-export function getDao2ConfigKey(seed: BN) {
+export function getDaoTreasury(config: PublicKey) {
   return PublicKey.findProgramAddressSync(
-    [Buffer.from("config"), seed.toArrayLike(Buffer, "le", 8)],
+    [Buffer.from("treasury"), config.toBuffer()],
+    new PublicKey(NEXT_PUBLIC_DAO_ID)
+  )[0];
+}
+
+export function getDaoAuth(config: PublicKey) {
+  return PublicKey.findProgramAddressSync(
+    [Buffer.from("auth"), config.toBuffer()],
+    new PublicKey(NEXT_PUBLIC_DAO_ID)
+  )[0];
+}
+
+export function getDaoConfigKey(seed: PublicKey) {
+  return PublicKey.findProgramAddressSync(
+    [Buffer.from("config"), seed.toBuffer()],
     new PublicKey(NEXT_PUBLIC_DAO_ID)
   )[0];
 }
@@ -27,7 +41,10 @@ export async function initializeDaoProgram(
   proposalPublicKey: PublicKey,
   votingPublicKey: PublicKey,
   stakingPublicKey: PublicKey,
-  collectionMind: PublicKey
+  collectionMind: PublicKey,
+  authKey: PublicKey,
+  treasuryKey: PublicKey,
+  configKey: PublicKey
 ) {
   const program = getDaoProgram(provider);
   return await program.methods
@@ -44,6 +61,10 @@ export async function initializeDaoProgram(
       stakingPublicKey,
       collectionMind
     )
-    .accounts({})
+    .accounts({
+      config: configKey,
+      treasury: treasuryKey,
+      auth: authKey,
+    })
     .instruction();
 }
