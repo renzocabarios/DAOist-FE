@@ -28,5 +28,5 @@
 
 .content {
   min-height: 90vh;
-  @apply w-full;
+  @apply w-full bg-slate-800 p-4;
 }
