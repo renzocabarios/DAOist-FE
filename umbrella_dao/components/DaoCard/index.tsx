@@ -13,7 +13,7 @@ function DaoCard({ title, createdAt, description }: IDaoCard) {
   const router = useRouter();
   return (
     <div
-      className="bg-slate-900 p-4 w-60 rounded-lg flex flex-col gap-6 text-gray-500"
+      className="bg-slate-900 p-4 w-60 rounded-lg flex flex-col gap-6 text-gray-500 shadow-xl"
       onClick={() => {
         router.push("/dao");
       }}
